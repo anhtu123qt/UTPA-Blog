@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('index');
+Route::group(['prefix' => 'admin','middleware' =>'auth'],function(){
+    Route::get('/dashboard','Admin\UserController@dashboard')->name('admin.dashboard');
+    Route::resource('category',Admin\CategoryController::class);
 });
+require __DIR__.'/auth.php';

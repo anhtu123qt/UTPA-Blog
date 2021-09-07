@@ -10,4 +10,7 @@ class BlogController extends Controller
     public function index(){
         return view('frontend.index');
     }
+    public function blog(){
+        return view('frontend.blog');
+    }
 }

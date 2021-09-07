@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('index','Frontend\BlogController@index');
+Route::get('blog','Frontend\BlogController@blog');
 Route::group(['prefix' => 'admin','middleware' =>'auth'],function(){
     Route::get('/dashboard','Admin\UserController@dashboard')->name('admin.dashboard');
     Route::resource('category',Admin\CategoryController::class);

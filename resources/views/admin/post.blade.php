@@ -162,7 +162,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for=""> Hình ảnh</label>
-                                                                <input type="file" name="image">
+                                                                <input type="file" name="image[]" multiple>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for=""> Nội dung</label>

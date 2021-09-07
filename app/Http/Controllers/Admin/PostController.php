@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -20,7 +21,7 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $posts = Post::paginate(4);
-        dd($posts);
+//        dd($posts);
         return view('admin.post',compact('categories','posts'));
     }
 
@@ -46,11 +47,23 @@ class PostController extends Controller
         $user_id = Auth::id();
         $now = Carbon::now('Asia/Ho_Chi_Minh');
         if($request->hasFile('image')) {
-            $image = $request->file('image');
-            $img = current(explode('.',$image->getClientOriginalName()));
-            $img1 = time().'.'.$img.'.'.$image->getClientOriginalExtension();
-            $image->move('upload/post',$img1);
-            $data['image'] = $img1;
+            $images = $request->file('image');
+            foreach($images as $image){
+                $img = date('Y.m.d').'_'.$image->getClientOriginalName();
+                $img_437x383 = '437x383_'.date('Y.m.d').'_'.$image->getClientOriginalName();
+                $img_255x255 = '255x255_'.date('Y.m.d').'_'.$image->getClientOriginalName();
+                $img_825x474 = '825x474_'.date('Y.m.d').'_'.$image->getClientOriginalName();
+                if(!is_dir("./upload/post/$user_id")) {
+                    mkdir("./upload/post/$user_id");
+                }
+                $path_437x383 = public_path('upload/post/'.$user_id.'/'.$img_437x383);
+                $path_255x255 = public_path('upload/post/'.$user_id.'/'.$img_255x255);
+                $path_825x474 = public_path('upload/post/'.$user_id.'/'.$img_825x474);
+                Image::make($image->getRealPath())->resize(437, 383)->save($path_437x383);
+                Image::make($image->getRealPath())->resize(255, 255)->save($path_255x255);
+                Image::make($image->getRealPath())->resize(825, 474)->save($path_825x474);
+                $imgs[] = $img;
+            }
         }
         Post::create([
             'user_id' => $user_id,
@@ -58,7 +71,7 @@ class PostController extends Controller
             'post_title' => $data['name'],
             'post_description' => $data['desc'],
             'post_content' => $data['content'],
-            'post_image' => $data['image'],
+            'post_image' => json_encode($imgs),
             'post_slug' => $data['slug'],
             'post_status' => 0,
             'created_at' => $now,

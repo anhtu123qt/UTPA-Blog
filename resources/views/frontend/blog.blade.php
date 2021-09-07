@@ -58,7 +58,7 @@
 
                 </div><!-- end pp -->
 
-                <img src="upload/garden_single_02.jpg" alt="" class="img-fluid img-fullwidth">
+                <img src="{{asset('frontend/upload/garden_single_02.jpg')}}" alt="" class="img-fluid img-fullwidth">
 
                 <div class="pp">
                     <h3><strong>Nam non velit est. Sed lobortis arcu vitae nunc molestie consectetur. Nam eget neque ac ex fringilla dignissim eu ac est. Nunc et nisl vel odio posuere. </strong></h3>

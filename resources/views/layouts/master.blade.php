@@ -205,6 +205,11 @@
                             <h6>Category</h6>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('post.index')}}" class="nav-link">
+                            <h6>Post manager</h6>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
